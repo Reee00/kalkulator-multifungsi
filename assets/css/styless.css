@@ -1,0 +1,593 @@
+:root {
+  /* Premium Color Palette - Teal & Emerald Theme */
+  --primary-50: #f0fdfa;
+  --primary-100: #ccfbf1;
+  --primary-200: #99f6e4;
+  --primary-300: #5eead4;
+  --primary-400: #2dd4bf;
+  --primary-500: #14b8a6;
+  --primary-600: #0d9488;
+  --primary-700: #0f766e;
+  --primary-800: #115e59;
+  --primary-900: #134e4a;
+  
+  /* Neutral Palette */
+  --neutral-50: #fafafa;
+  --neutral-100: #f5f5f5;
+  --neutral-200: #e5e5e5;
+  --neutral-300: #d4d4d4;
+  --neutral-400: #a3a3a3;
+  --neutral-500: #737373;
+  --neutral-600: #525252;
+  --neutral-700: #404040;
+  --neutral-800: #262626;
+  --neutral-900: #171717;
+  
+  /* Accent Colors */
+  --accent-orange: #fb923c;
+  --accent-red: #f87171;
+  --accent-purple: #a78bfa;
+  
+  /* Semantic Colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: var(--neutral-50);
+  --bg-tertiary: var(--primary-50);
+  --text-primary: var(--neutral-900);
+  --text-secondary: var(--neutral-600);
+  --text-inverse: #ffffff;
+  
+  /* Component Specific */
+  --calculator-bg: var(--bg-primary);
+  --display-bg: var(--bg-tertiary);
+  --btn-number-bg: var(--neutral-100);
+  --btn-operator-bg: var(--primary-500);
+  --btn-equal-bg: var(--primary-700);
+  --btn-clear-bg: var(--accent-red);
+  --btn-delete-bg: var(--accent-orange);
+  
+  /* Elevation System */
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.06), 
+                 0 1px 2px rgba(0, 0, 0, 0.04);
+  --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.08), 
+                 0 2px 4px rgba(0, 0, 0, 0.06);
+  --elevation-3: 0 12px 24px rgba(0, 0, 0, 0.10), 
+                 0 4px 8px rgba(0, 0, 0, 0.08);
+  --elevation-4: 0 20px 40px rgba(0, 0, 0, 0.12), 
+                 0 8px 16px rgba(0, 0, 0, 0.10);
+  --shadow-glow: 0 0 20px rgba(20, 184, 166, 0.15);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+  
+  /* Spacing Scale */
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 20px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  
+  /* Animation */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* =====================
+   RESET & BASE
+===================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
+               'Helvetica Neue', Arial, sans-serif;
+  background: linear-gradient(135deg, 
+              var(--primary-50) 0%, 
+              var(--primary-100) 50%, 
+              var(--neutral-100) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-lg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* =====================
+   CALCULATOR CONTAINER
+===================== */
+.calculator {
+  width: 100%;
+  max-width: 400px;
+  background: var(--calculator-bg);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-2xl);
+  box-shadow: var(--elevation-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glass Effect Border */
+.calculator::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-2xl);
+  padding: 1px;
+  background: linear-gradient(135deg, 
+              rgba(20, 184, 166, 0.2), 
+              rgba(20, 184, 166, 0.05));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, 
+                linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* =====================
+   HEADER SECTION
+===================== */
+.calculator h2 {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.025em;
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+  background: linear-gradient(135deg, var(--primary-700), var(--primary-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =====================
+   DISPLAY SCREEN
+===================== */
+#display {
+  width: 100%;
+  height: 90px;
+  background: var(--display-bg);
+  border: 2px solid rgba(20, 184, 166, 0.1);
+  border-radius: var(--radius-lg);
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  padding: var(--space-lg) var(--space-xl);
+  text-align: right;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-inset);
+  transition: all var(--transition-base);
+  outline: none;
+  letter-spacing: -0.02em;
+}
+
+#display:focus {
+  border-color: var(--primary-500);
+  background: var(--bg-primary);
+  box-shadow: var(--shadow-inset), 
+              0 0 0 4px rgba(20, 184, 166, 0.1),
+              var(--shadow-glow);
+}
+
+#display::placeholder {
+  color: var(--neutral-400);
+  opacity: 0.6;
+}
+
+#display:hover {
+  border-color: var(--primary-400);
+}
+
+/* =====================
+   BUTTON GRID LAYOUT
+===================== */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-sm);
+}
+
+/* =====================
+   BUTTON BASE STYLING
+===================== */
+button {
+  height: 68px;
+  border-radius: var(--radius-lg);
+  border: none;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  color: var(--text-primary);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: var(--elevation-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ripple Effect Base */
+button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, 
+              rgba(255, 255, 255, 0.6) 0%, 
+              transparent 70%);
+  transform: scale(0);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+button:active::after {
+  transform: scale(2);
+  opacity: 1;
+  transition: transform 0s, opacity 0s;
+}
+
+/* Hover State */
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--elevation-3);
+}
+
+/* Active State */
+button:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: var(--elevation-1);
+}
+
+/* =====================
+   NUMBER BUTTONS
+===================== */
+button[data-value]:not(.equal) {
+  background: var(--btn-number-bg);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+button[data-value]:not(.equal):hover {
+  background: var(--neutral-200);
+}
+
+button[data-value]:not(.equal):active {
+  background: var(--neutral-300);
+}
+
+/* =====================
+   OPERATOR BUTTONS
+===================== */
+button[data-value="+"],
+button[data-value="-"],
+button[data-value="*"],
+button[data-value="/"],
+button[data-value="%"] {
+  background: var(--btn-operator-bg);
+  color: var(--text-inverse);
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: var(--elevation-2), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+button[data-value="+"]:hover,
+button[data-value="-"]:hover,
+button[data-value="*"]:hover,
+button[data-value="/"]:hover,
+button[data-value="%"]:hover {
+  background: var(--primary-600);
+  box-shadow: var(--elevation-3), 
+              var(--shadow-glow);
+}
+
+button[data-value="+"]:active,
+button[data-value="-"]:active,
+button[data-value="*"]:active,
+button[data-value="/"]:active,
+button[data-value="%"]:active {
+  background: var(--primary-700);
+}
+
+/* =====================
+   CLEAR BUTTON
+===================== */
+button[data-action="clear"] {
+  background: var(--btn-clear-bg);
+  color: var(--text-inverse);
+  font-weight: 700;
+  box-shadow: var(--elevation-2), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+button[data-action="clear"]:hover {
+  background: #ef4444;
+  box-shadow: var(--elevation-3), 
+              0 0 20px rgba(248, 113, 113, 0.3);
+}
+
+button[data-action="clear"]:active {
+  background: #dc2626;
+}
+
+/* =====================
+   DELETE BUTTON
+===================== */
+button[data-action="delete"] {
+  background: var(--btn-delete-bg);
+  color: var(--text-inverse);
+  font-weight: 700;
+  box-shadow: var(--elevation-2), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+button[data-action="delete"]:hover {
+  background: #f97316;
+  box-shadow: var(--elevation-3), 
+              0 0 20px rgba(251, 146, 60, 0.3);
+}
+
+button[data-action="delete"]:active {
+  background: #ea580c;
+}
+
+/* =====================
+   EQUAL BUTTON
+===================== */
+button.equal {
+  background: var(--btn-equal-bg);
+  color: var(--text-inverse);
+  font-size: 1.375rem;
+  font-weight: 700;
+  box-shadow: var(--elevation-2), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.2),
+              var(--shadow-glow);
+  position: relative;
+  overflow: hidden;
+}
+
+button.equal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+              rgba(255, 255, 255, 0.2), 
+              transparent);
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+button.equal:hover::before {
+  opacity: 1;
+}
+
+button.equal:hover {
+  background: var(--primary-800);
+  box-shadow: var(--elevation-3), 
+              0 0 24px rgba(20, 184, 166, 0.4);
+  transform: translateY(-3px) scale(1.02);
+}
+
+button.equal:active {
+  background: var(--primary-900);
+  transform: translateY(0) scale(1);
+}
+
+/* =====================
+   ZERO BUTTON (WIDE)
+===================== */
+button.zero {
+  grid-column: span 2;
+}
+
+/* =====================
+   DARK MODE THEME
+===================== */
+body.dark {
+  --bg-primary: var(--neutral-900);
+  --bg-secondary: var(--neutral-800);
+  --bg-tertiary: var(--neutral-800);
+  --text-primary: var(--neutral-50);
+  --text-secondary: var(--neutral-400);
+  
+  --calculator-bg: var(--neutral-900);
+  --display-bg: var(--neutral-800);
+  --btn-number-bg: var(--neutral-700);
+  --btn-operator-bg: var(--primary-600);
+  --btn-equal-bg: var(--primary-500);
+  
+  --elevation-1: 0 1px 3px rgba(0, 0, 0, 0.3), 
+                 0 1px 2px rgba(0, 0, 0, 0.2);
+  --elevation-2: 0 4px 8px rgba(0, 0, 0, 0.4), 
+                 0 2px 4px rgba(0, 0, 0, 0.3);
+  --elevation-3: 0 12px 24px rgba(0, 0, 0, 0.5), 
+                 0 4px 8px rgba(0, 0, 0, 0.4);
+  --elevation-4: 0 20px 40px rgba(0, 0, 0, 0.6), 
+                 0 8px 16px rgba(0, 0, 0, 0.5);
+  
+  background: linear-gradient(135deg, 
+              var(--neutral-900) 0%, 
+              #0a0a0a 50%, 
+              var(--neutral-800) 100%);
+}
+
+body.dark .calculator {
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: var(--elevation-4), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+body.dark .calculator::before {
+  background: linear-gradient(135deg, 
+              rgba(20, 184, 166, 0.3), 
+              rgba(20, 184, 166, 0.1));
+}
+
+body.dark #display {
+  border-color: rgba(20, 184, 166, 0.2);
+  background: var(--display-bg);
+}
+
+body.dark #display:focus {
+  border-color: var(--primary-400);
+  background: var(--neutral-800);
+  box-shadow: var(--shadow-inset), 
+              0 0 0 4px rgba(20, 184, 166, 0.15),
+              var(--shadow-glow);
+}
+
+body.dark button[data-value]:not(.equal) {
+  background: var(--btn-number-bg);
+  color: var(--text-primary);
+  box-shadow: var(--elevation-1), 
+              inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+body.dark button[data-value]:not(.equal):hover {
+  background: var(--neutral-600);
+}
+
+/* =====================
+   FOCUS VISIBLE (A11Y)
+===================== */
+button:focus-visible {
+  outline: 3px solid var(--primary-500);
+  outline-offset: 2px;
+}
+
+/* =====================
+   RESPONSIVE DESIGN
+===================== */
+@media (max-width: 480px) {
+  :root {
+    font-size: 14px;
+  }
+  
+  .calculator {
+    max-width: 100%;
+    padding: var(--space-lg);
+  }
+  
+  #display {
+    height: 75px;
+    font-size: 2rem;
+    padding: var(--space-md) var(--space-lg);
+  }
+  
+  button {
+    height: 60px;
+    font-size: 1rem;
+  }
+  
+  .buttons {
+    gap: var(--space-xs);
+  }
+}
+
+@media (max-width: 360px) {
+  button {
+    height: 52px;
+  }
+  
+  #display {
+    height: 65px;
+  }
+}
+
+/* High DPI Screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  button {
+    border: 0.5px solid rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Touch Device Optimization */
+@media (hover: none) and (pointer: coarse) {
+  button {
+    height: 72px;
+  }
+  
+  button:hover {
+    transform: none;
+    box-shadow: var(--elevation-2);
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+  }
+  
+  .calculator {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+}
+
+/* =====================
+   ACCESSIBILITY HELPERS
+===================== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* =====================
+   ANIMATION KEYFRAMES
+===================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.calculator {
+  animation: fadeIn 0.5s ease-out;
+}
